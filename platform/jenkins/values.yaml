@@ -7,3 +7,16 @@ controller:
     requests:
       cpu: "500m"
       memory: "1024Mi"
+    limits:
+      cpu: "1000m"
+      memory: "2048Mi"
+
+  sidecars:
+    configAutoReload:
+      resources:
+        requests:
+          cpu: "50m"
+          memory: "64Mi"
+        limits:
+          cpu: "100m"
+          memory: "128Mi"
