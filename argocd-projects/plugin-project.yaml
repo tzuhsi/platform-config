@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: plugin-project
+  namespace: argocd
+spec:
+  description: Plugin applications developed in-house
+
+  destinations:
+    - namespace: plugin-prod
+      server: https://kubernetes.default.svc
+
+  sourceRepos:
+    - 'git@github.com:tzuhsi/platform-config.git' 
+    - 'git@github.com:tzuhsi/helm-charts.git'
+    - '*'
+
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'

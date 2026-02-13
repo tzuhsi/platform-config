@@ -1,0 +1,22 @@
+installCRDs: true
+
+serviceAccount:
+  create: false
+  name: external-secrets-sa
+
+# Webhook 配置
+webhook:
+  port: 9443
+  replicaCount: 2
+
+# 資源限制
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+# 高可用性
+replicaCount: 2

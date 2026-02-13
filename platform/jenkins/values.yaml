@@ -1,0 +1,9 @@
+controller:
+  serviceType: NodePort
+  admin:
+    username: "admin"
+    password: "xb3C0vep9BOJD1BG96bOYB"
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "1024Mi"

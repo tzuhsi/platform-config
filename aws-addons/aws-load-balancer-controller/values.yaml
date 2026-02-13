@@ -1,0 +1,20 @@
+clusterName: prod-qpmn-eks-cluster
+
+serviceAccount:
+  create: true
+  name: aws-load-balancer-controller
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 500Mi
+  requests:
+    cpu: 100m
+    memory: 200Mi
+
+# 高可用性設定
+replicaCount: 2
+
+# 其他設定
+region: us-east-2
+vpcId: vpc-08210a612e653d5e3

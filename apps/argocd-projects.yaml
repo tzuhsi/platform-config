@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd-projects
+  namespace: argocd
+spec:
+  project: default # 基礎設施通常放在 default project 確保有權限
+  source:
+    repoURL: git@github.com:tzuhsi/platform-config.git
+    targetRevision: main
+    path: argocd-projects
+    directory:
+      recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

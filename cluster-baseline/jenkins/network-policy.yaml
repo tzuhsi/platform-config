@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: jenkins-allow-internal-and-argocd
+  namespace: jenkins
+spec:
+  podSelector: {} # 選取該 Namespace 下的所有 Pod
+  policyTypes:
+  - Ingress
+  ingress:
+  # 規則 1: 允許自己 Namespace 內的 Pod 互相訪問
+  - from:
+    - podSelector: {}
+  # 規則 2: 允許來自 argocd Namespace 的流量
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: argocd

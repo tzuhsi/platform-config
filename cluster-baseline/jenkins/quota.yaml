@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: jenkins-quota
+  namespace: jenkins
+spec:
+  hard:
+    # 限制所有 Pod 的 CPU 請求總和為 2 核，最高限制為 4 核
+    requests.cpu: "2"
+    limits.cpu: "4"
+    # 限制所有 Pod 的記憶體請求總和為 4Gi，最高限制為 8Gi
+    requests.memory: 4Gi
+    limits.memory: 8Gi
+    # 限制該 Namespace 內最多只能跑 10 個 Pod
+    pods: "10"
+    # 限制 PersistentVolumeClaims 的總量
+    requests.storage: 20Gi

@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: root-app
+  namespace: argocd
+  # 建議加上這個，當 root-app 被刪除時，會一併清理它產生的子應用
+  finalizers:
+    - argocd.argoproj.io/resources-finalizer
+spec:
+  project: default # Root App 必須在 default 才有權限建立 AppProject
+
+  source:
+    repoURL: git@github.com:tzuhsi/platform-config.git
+    targetRevision: main
+    path: apps # 這裡指定監控 apps/ 資料夾
+    directory:
+      recurse: true # 讓它也會掃描 apps/ 底下的子目錄（如果你以後想分類的話）
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+
+  syncPolicy:
+    automated:
+      prune: true    # 自動刪除 Git 中不存在的資源
+      selfHeal: true # 當有人手動改動叢集資源時，自動修復回 Git 的狀態

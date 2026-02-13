@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: plugin-prod-quota
+  namespace: plugin-prod
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"  
+spec:
+  hard:
+    requests.cpu: "4"
+    limits.cpu: "8"
+    requests.memory: 8Gi
+    limits.memory: 16Gi
+    pods: "20"
+    requests.storage: 50Gi

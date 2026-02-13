@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: etsy-prod
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"  
+spec:
+  project: plugin-project
+
+  sources:
+    - repoURL: git@github.com:tzuhsi/helm-charts.git
+      targetRevision: main
+      path: charts/etsy
+      helm:
+        valueFiles:
+          - $values/plugin/etsy/values-prod.yaml
+
+    - repoURL: git@github.com:tzuhsi/platform-config.git
+      targetRevision: main
+      ref: values
+
+    - repoURL: git@github.com:tzuhsi/platform-config.git
+      targetRevision: main
+      path: plugin/etsy/manifests
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: plugin-prod
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=false
